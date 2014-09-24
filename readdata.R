@@ -59,8 +59,6 @@ readdata <- function(path, mask="*.csv") {
 			d <- c(d,c(rate))
 			v <- c(v,c(data$Volume))
 			j = j + 1;
-			
-			if (j == 3) break
 		}
 	}
 	d = matrix(d, nrow=769, ncol=j-1)
@@ -68,5 +66,3 @@ readdata <- function(path, mask="*.csv") {
 	
 	return(c(d,v))
 }
-
-readdata("ChinaStockMarket/data")
