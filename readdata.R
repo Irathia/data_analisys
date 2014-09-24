@@ -64,5 +64,5 @@ readdata <- function(path, mask="*.csv") {
 	d = matrix(d, nrow=769, ncol=j-1)
 	v = matrix(v, nrow=770, ncol=j-1)
 	
-	return(c(d,v))
+	return(list(rate=d,value=v))
 }
