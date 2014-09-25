@@ -54,6 +54,7 @@ readdata <- function(path, mask="*.csv") {
 			ggsave(qplot(srate, geom="histogram"),file=paste(output,paste(files_list[i],"hist_without.png",sep="_"), sep="/"))
 			ggsave(qplot(x=date, y=data$Close, geom="auto"),file=paste(output,paste(files_list[i],"price.png",sep="_"), sep="/"))
 			ggsave(qplot(date, data$Volume, geom="auto"),file=paste(output,paste(files_list[i],"volume.png",sep="_"), sep="/"))
+			ggsave(qplot(get_range(data$Volume, pr), geom="histogram"),file=paste(output,paste(files_list[i],"hist_volume_without.png",sep="_"), sep="/"))
 			
 			
 			d <- c(d,c(rate))
@@ -66,3 +67,6 @@ readdata <- function(path, mask="*.csv") {
 	
 	return(list(rate=d,value=v))
 }
+
+data = readdata("data")
+

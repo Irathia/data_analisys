@@ -1,3 +1,5 @@
 Grapchics/
 *.png
-.project
+.Rproj.user
+.Rhistory
+*.Rproj
