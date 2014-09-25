@@ -56,6 +56,29 @@ readdata <- function(path, mask="*.csv") {
 			ggsave(qplot(data$Volume, geom="histogram"),file=paste(output,paste(files_list[i],"hist_volume.png",sep="_"), sep="/"))
 			
 			
+      #bootsrap
+      
+      bootstrap <- function(d, l){
+        b <- c()
+        for (i in 1:l){
+          b <- c(b,d[sample(1:length(d),1)])
+        }
+        return(b)
+      }
+      
+      srateboot <- bootstrap(rate,10000)
+			svolumeboot <- bootstrap(data$Volume,10000)
+			pr1 = trunc(2.5*length(srateboot)/100);
+			
+			if (!pr1) {
+			  pr1 = 1
+			}
+      
+      
+			ggsave(qplot(get_range(sort(srateboot),pr1), geom="histogram"),file=paste(output,paste(files_list[i],"hist_price_without_plusboot.png",sep="_"), sep="/"))
+			ggsave(qplot(get_range(sort(svolumeboot),pr1), geom="histogram"),file=paste(output,paste(files_list[i],"hist_volume_without_plusboot.png",sep="_"), sep="/"))
+      
+      
 			d <- c(d,c(rate))
 			v <- c(v,c(data$Volume))
 			j = j + 1;
