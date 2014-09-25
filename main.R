@@ -1,4 +1,4 @@
 source("readdata.R")
 
-data = readdata("data")
+data = readdata("test_data")
 
