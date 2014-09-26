@@ -1,0 +1,30 @@
+BOC Hong Kong Holdings Ltd. (2388.HK).csv;Money
+Cathay Pacific Airways Limited.csv;Other
+Cheung Kong (Holdings) Limited (0001.HK).csv;Conglomerat
+China Mobile Limited (0941.HK).csv;Other
+China Overseas Land & Investment Ltd. (0688.HK).csv;Realestate
+China Resources Land Ltd. (1109.HK).csv;Realestate
+China Resources Power Holdings Co. Ltd. (0836.HK).csv;Other
+China Unicom (Hong Kong) Limited (0762.HK).csv;Other
+CITIC Limited.csv;Money
+CLP Holdings Ltd. (0002.HK).csv;Other
+Galaxy Entertainment Group Limited.csv;Other
+HANG LUNG PPT.csv;Realestate
+Hang Seng Bank Limited.csv;Money
+Henderson Land Development Co. Ltd..csv;Realestate
+Hengan International Group Company Limited (1044.HK).csv;Other
+Hong Kong Exchanges & Clearing Limited (0388.HK).csv;Money
+Hutchison Whampoa Limited.csv;Conglomerat
+Kunlun Energy Company Limited.csv;Other
+Lenovo Group Limited (0992.HK).csv;Other
+MTR Corporation Limited.csv;Other
+New World Development Company Limited.csv;Realestate
+PetroChina Co. Ltd. (0857.HK).csv;Other
+Power Assets Holdings Limited.csv;Other
+Sino Land Company Limited.csv;Realestate
+Sun Hung Kai Properties Limited.csv;Conglomerat
+Swire Pacific Limited.csv;Conglomerat
+The Bank of East Asia, Limited.csv;Money
+The Hong Kong and China Gas Company Limited.csv;Other
+The Wharf (Holdings) Limited.csv;Conglomerat
+Tingyi Cayman Islands Holding Corp. (0322.HK).csv;Other
