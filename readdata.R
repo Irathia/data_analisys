@@ -33,7 +33,6 @@ readdata <- function(path, mask="*.csv") {
 	
 	j = 1
 	d <- list()
-	v <- list()
 	files_list = list.files(path=path, pattern=mask)
 	for (i in 1:length(files_list)) {
 		data = read.csv(file=paste(path,files_list[i], sep="/"))
@@ -44,7 +43,6 @@ readdata <- function(path, mask="*.csv") {
 			
 			srate = sort(rate);
 			pr = trunc(length(srate)/100);
-			
 			if (!pr) {
 				pr = 1
 			}
@@ -80,13 +78,12 @@ readdata <- function(path, mask="*.csv") {
       
       
       
-			d [[sub(".csv", "" ,c(files_list[i]), perl=TRUE)]] <- rate
-			v [[files_list[i]]] <- data$Volume
+			d [[sub(".csv", "" ,c(files_list[i]), perl=TRUE)]] <- list(rate=rate,volume=data$Volume, date=date)
 			j = j + 1;
 		}
 	}
 	#d = matrix(d, nrow=769, ncol=j-1)
 	#v = matrix(v, nrow=770, ncol=j-1)
 	
-	return(list(rate=d,volume=v))
+	return(d)
 }
