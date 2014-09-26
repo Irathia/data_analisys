@@ -1,7 +1,11 @@
 source("readdata.R")
 source("correlation.R")
 
-data = readdata("test_data")
+#data = readdata("test_data")
 
-crate = correlation(data$rate,4)
-cvolume = correlation(data$value,4)
+crate = correlation(data$rate)
+cvolume = correlation(data$volume)
+
+
+rrate = regression(data$rate)
+rvolume = regression(data$volume)

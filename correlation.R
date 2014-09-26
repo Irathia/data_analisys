@@ -1,6 +1,15 @@
 #correlation
 
-correlation <- function(data,k){
-  ck <- cor(matrix(data = data, nrow = length(data)/k, ncol = k), use = "all.obs")
+correlation <- function(data){
+  data_vector = c()
+  for (i in 1:length(data)) {
+    data_vector = c(data_vector, c(data[[i]]))
+  }
+  
+  m <- matrix(data = data_vector, nrow = length(data_vector)/length(data), ncol = length(data))
+  
+  ck <- cor(m, use = "all.obs")
+  colnames(ck) <- c(names(data))
+  rownames(ck) <- c(names(data))
   return(ck)
 }

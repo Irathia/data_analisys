@@ -32,8 +32,8 @@ readdata <- function(path, mask="*.csv") {
 	library(ggplot2)
 	
 	j = 1
-	d <- c()
-	v <- c()
+	d <- list()
+	v <- list()
 	files_list = list.files(path=path, pattern=mask)
 	for (i in 1:length(files_list)) {
 		data = read.csv(file=paste(path,files_list[i], sep="/"))
@@ -79,13 +79,14 @@ readdata <- function(path, mask="*.csv") {
 			ggsave(qplot(get_range(sort(svolumeboot),pr1), geom="histogram"),file=paste(output,paste(files_list[i],"hist_volume_without_plusboot.png",sep="_"), sep="/"))
       
       
-			d <- c(d,c(rate))
-			v <- c(v,c(data$Volume))
+      
+			d [[sub(".csv", "" ,c(files_list[i]), perl=TRUE)]] <- rate
+			v [[files_list[i]]] <- data$Volume
 			j = j + 1;
 		}
 	}
 	#d = matrix(d, nrow=769, ncol=j-1)
 	#v = matrix(v, nrow=770, ncol=j-1)
 	
-	return(list(rate=d,value=v))
+	return(list(rate=d,volume=v))
 }
