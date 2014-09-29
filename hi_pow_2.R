@@ -32,4 +32,4 @@ hi_pow_2 <- function(N,col_number) {
   return(hi)
 }
 
-hi = hi_pow_2(N, 10)
+#hi = hi_pow_2(N, 10)
