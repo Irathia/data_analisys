@@ -116,5 +116,3 @@ tabreg <- function(data){
 # plot(meanall~y,cex=1.5,xaxt='n',col='blue',pch=16,ylim=c(10000,45000000))
 # arrows(y,(meanall-sdall),y,(meanall+sdall),code=3,length=0.2,angle=90,col='red')
 }
-
-tabreg(data)
