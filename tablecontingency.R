@@ -10,8 +10,9 @@ tablecontingency <- function(data, value, i_comp_name, j_comp_name, n_size){
       pr = 1
     }
     new_lenght = length(svalue) - 2*pr;
-    svalue = get_range(svalue, pr)
-    vm <- c(svalue, c(vm))
+    value1 = svalue[pr]
+    value99 = svalue[length(svalue) - pr]
+    vm <- c(data[[i]][[value]][-which(data[[i]][[value]]<value1|data[[i]][[value]]>value99)], c(vm))
   }
   
   m <- matrix(data = vm, nrow = length(vm)/length(data), ncol = length(data))
@@ -43,4 +44,4 @@ tablecontingency <- function(data, value, i_comp_name, j_comp_name, n_size){
   return(N)
 }
 
-N = tablecontingency(data, "rate", names(data)[1], names(data)[3], 10)
+#N = tablecontingency(data, "rate", names(data)[2], names(data)[3], 10)
