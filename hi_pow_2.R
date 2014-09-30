@@ -10,8 +10,8 @@ hi_pow_2 <- function(N,col_number) {
       summ_i[i] = summ_i[i] +  N[i,j];
     }
   }
-  print(summ_j)
-  print(summ_i)
+  #print(summ_j)
+  #print(summ_i)
   
   p_N <- matrix(data = 0, nrow = length(N)/col_number, ncol = col_number)
   for (i in 1:col_number) {
