@@ -8,6 +8,7 @@ source("tablecontingency.R")
 source("hi_pow_2.R")
 source("ofm.R")
 source("mfm.R")
+source("clasters.r")
 
 #data = readdata("data")
 
@@ -34,8 +35,11 @@ source("mfm.R")
 
 #t = matrix(t,length(data),length(data))
 
-ofmdatarate <- ofmrate(data)
-ofmdatavolume <- ofmvolume(data)
+#ofmdatarate <- ofmrate(data)
+#ofmdatavolume <- ofmvolume(data)
 
-mfmdatarate <- mfmrate(data)
-mfmdatavolume <- mfmvolume(data)
+#mfmdatarate <- mfmrate(data)
+#mfmdatavolume <- mfmvolume(data)
+
+clinfo1 <- hcls(data)
+clinfo2 <- ksrcls(data)
