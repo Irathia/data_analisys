@@ -1,19 +1,28 @@
 #clasters
 
 hcls <- function(data){
-  #евклидово расстояние
-  d1 <- matrix(0,length(data),length(data))
-  #расстояние городских кварталов
-  d2 <- matrix(0,length(data),length(data))
-  #расстояние Чебышева
-  d3 <- matrix(0,length(data),length(data))
-  #Расстояние Минковского p = 5
-  d4 <- matrix(0,length(data),length(data))
-  p <- 5
+  
+  mdata <- matrix(0,length(data[[1]]$rate),length(data))
   for(i in 1:length(data)){
-    for(j in 1:length(data)){
-      x <- data[[i]]$rate
-      y <- data[[j]]$rate
+    mdata[,i] <- data[[i]]$rate
+  }
+  
+  #евклидово расстояние
+  s <-dim(mdata)[1]
+  d1 <- matrix(0,s,s)
+  #расстояние городских кварталов
+  d2 <- matrix(0,s,s)
+  #расстояние Чебышева
+  d3 <- matrix(0,s,s)
+  #Расстояние Минковского p = 5
+  d4 <- matrix(0,s,s)
+  p <- 5
+  
+  
+  for(i in 1:(dim(mdata)[1])){
+    for(j in 1:(dim(mdata)[1])){
+      x <- mdata[i,]
+      y <- mdata[j,]
       d1[i,j] <- sqrt(t(x-y)%*%(x-y))
       d2[i,j] <- sum(abs(x-y))
       d3[i,j] <- max(abs(x-y))
@@ -52,22 +61,22 @@ hcls <- function(data){
   #type 1 - cl1, type2 - cl2, type3 - cl3, type4 - cl4
   type12d1 <- matrix(0,2,2)#метод ближайшего соседа
   type12d2 <- matrix(0,2,2)#метод дальнего соседа
-  type12d3 <- matrix(0,2,2)#метод медиан
+  type12d3 <- matrix(0,2,2)#меетод центройдов
   type12d4 <- matrix(0,2,2)#метод Варда
 
   type13d1 <- matrix(0,3,3)#метод ближайшего соседа
   type13d2 <- matrix(0,3,3)#метод дальнего соседа
-  type13d3 <- matrix(0,3,3)#метод медиан
+  type13d3 <- matrix(0,3,3)#меетод центройдов
   type13d4 <- matrix(0,3,3)#метод Варда
 
   type14d1 <- matrix(0,4,4)#метод ближайшего соседа
   type14d2 <- matrix(0,4,4)#метод дальнего соседа
-  type14d3 <- matrix(0,4,4)#метод медиан
+  type14d3 <- matrix(0,4,4)#меетод центройдов
   type14d4 <- matrix(0,4,4)#метод Варда
   
   type15d1 <- matrix(0,5,5)#метод ближайшего соседа
   type15d2 <- matrix(0,5,5)#метод дальнего соседа
-  type15d3 <- matrix(0,5,5)#метод медиан
+  type15d3 <- matrix(0,5,5)#меетод центройдов
   type15d4 <- matrix(0,5,5)#метод Варда
 
   type12 <- list(d1 = type12d1, d2 = type12d2, d3 = type12d3, d4 = type12d4)
@@ -78,22 +87,22 @@ hcls <- function(data){
   
   type22d1 <- matrix(0,2,2)#метод ближайшего соседа
   type22d2 <- matrix(0,2,2)#метод дальнего соседа
-  type22d3 <- matrix(0,2,2)#метод медиан
+  type22d3 <- matrix(0,2,2)#меетод центройдов
   type22d4 <- matrix(0,2,2)#метод Варда
   
   type23d1 <- matrix(0,3,3)#метод ближайшего соседа
   type23d2 <- matrix(0,3,3)#метод дальнего соседа
-  type23d3 <- matrix(0,3,3)#метод медиан
+  type23d3 <- matrix(0,3,3)#меетод центройдов
   type23d4 <- matrix(0,3,3)#метод Варда
   
   type24d1 <- matrix(0,4,4)#метод ближайшего соседа
   type24d2 <- matrix(0,4,4)#метод дальнего соседа
-  type24d3 <- matrix(0,4,4)#метод медиан
+  type24d3 <- matrix(0,4,4)#меетод центройдов
   type24d4 <- matrix(0,4,4)#метод Варда
   
   type25d1 <- matrix(0,5,5)#метод ближайшего соседа
   type25d2 <- matrix(0,5,5)#метод дальнего соседа
-  type25d3 <- matrix(0,5,5)#метод медиан
+  type25d3 <- matrix(0,5,5)#меетод центройдов
   type25d4 <- matrix(0,5,5)#метод Варда
   
   type22 <- list(d1 = type22d1, d2 = type22d2, d3 = type22d3, d4 = type22d4)
@@ -104,22 +113,22 @@ hcls <- function(data){
 
   type32d1 <- matrix(0,2,2)#метод ближайшего соседа
   type32d2 <- matrix(0,2,2)#метод дальнего соседа
-  type32d3 <- matrix(0,2,2)#метод медиан
+  type32d3 <- matrix(0,2,2)#меетод центройдов
   type32d4 <- matrix(0,2,2)#метод Варда
   
   type33d1 <- matrix(0,3,3)#метод ближайшего соседа
   type33d2 <- matrix(0,3,3)#метод дальнего соседа
-  type33d3 <- matrix(0,3,3)#метод медиан
+  type33d3 <- matrix(0,3,3)#меетод центройдов
   type33d4 <- matrix(0,3,3)#метод Варда
   
   type34d1 <- matrix(0,4,4)#метод ближайшего соседа
   type34d2 <- matrix(0,4,4)#метод дальнего соседа
-  type34d3 <- matrix(0,4,4)#метод медиан
+  type34d3 <- matrix(0,4,4)#меетод центройдов
   type34d4 <- matrix(0,4,4)#метод Варда
   
   type35d1 <- matrix(0,5,5)#метод ближайшего соседа
   type35d2 <- matrix(0,5,5)#метод дальнего соседа
-  type35d3 <- matrix(0,5,5)#метод медиан
+  type35d3 <- matrix(0,5,5)#меетод центройдов
   type35d4 <- matrix(0,5,5)#метод Варда
   
   type32 <- list(d1 = type32d1, d2 = type32d2, d3 = type32d3, d4 = type32d4)
@@ -130,22 +139,22 @@ hcls <- function(data){
   
   type42d1 <- matrix(0,2,2)#метод ближайшего соседа
   type42d2 <- matrix(0,2,2)#метод дальнего соседа
-  type42d3 <- matrix(0,2,2)#метод медиан
+  type42d3 <- matrix(0,2,2)#меетод центройдов
   type42d4 <- matrix(0,2,2)#метод Варда
   
   type43d1 <- matrix(0,3,3)#метод ближайшего соседа
   type43d2 <- matrix(0,3,3)#метод дальнего соседа
-  type43d3 <- matrix(0,3,3)#метод медиан
+  type43d3 <- matrix(0,3,3)#меетод центройдов
   type43d4 <- matrix(0,3,3)#метод Варда
   
   type44d1 <- matrix(0,4,4)#метод ближайшего соседа
   type44d2 <- matrix(0,4,4)#метод дальнего соседа
-  type44d3 <- matrix(0,4,4)#метод медиан
+  type44d3 <- matrix(0,4,4)#меетод центройдов
   type44d4 <- matrix(0,4,4)#метод Варда
   
   type45d1 <- matrix(0,5,5)#метод ближайшего соседа
   type45d2 <- matrix(0,5,5)#метод дальнего соседа
-  type45d3 <- matrix(0,5,5)#метод медиан
+  type45d3 <- matrix(0,5,5)#меетод центройдов
   type45d4 <- matrix(0,5,5)#метод Варда
 
   type42 <- list(d1 = type42d1, d2 = type42d2, d3 = type42d3, d4 = type42d4)
@@ -248,19 +257,28 @@ return(list(distance = distance,
 #k средних
 
 ksrcls <- function(data){
-  #евклидово расстояние
-  d1 <- matrix(0,length(data),length(data))
-  #расстояние городских кварталов
-  d2 <- matrix(0,length(data),length(data))
-  #расстояние Чебышева
-  d3 <- matrix(0,length(data),length(data))
-  #Расстояние Минковского p = 5
-  d4 <- matrix(0,length(data),length(data))
-  p <- 5
+  
+  mdata <- matrix(0,length(data[[1]]$rate),length(data))
   for(i in 1:length(data)){
-    for(j in 1:length(data)){
-      x <- data[[i]]$rate
-      y <- data[[j]]$rate
+    mdata[,i] <- data[[i]]$rate
+  }
+  
+  s <-dim(mdata)[1]
+  #евклидово расстояние
+  d1 <- matrix(0,s,s)
+  #расстояние городских кварталов
+  d2 <- matrix(0,s,s)
+  #расстояние Чебышева
+  d3 <- matrix(0,s,s)
+  #Расстояние Минковского p = 5
+  d4 <- matrix(0,s,s)
+  p <- 5
+  
+  
+  for(i in 1:(dim(mdata)[1])){
+    for(j in 1:(dim(mdata)[1])){
+      x <- mdata[i,]
+      y <- mdata[j,]
       d1[i,j] <- sqrt(t(x-y)%*%(x-y))
       d2[i,j] <- sum(abs(x-y))
       d3[i,j] <- max(abs(x-y))
@@ -295,22 +313,22 @@ ksrcls <- function(data){
   #type 1 - cl1, type2 - cl2, type3 - cl3, type4 - cl4
   type12d1 <- matrix(0,2,2)#метод ближайшего соседа
   type12d2 <- matrix(0,2,2)#метод дальнего соседа
-  type12d3 <- matrix(0,2,2)#метод медиан
+  type12d3 <- matrix(0,2,2)#меетод центройдов
   type12d4 <- matrix(0,2,2)#метод Варда
   
   type13d1 <- matrix(0,3,3)#метод ближайшего соседа
   type13d2 <- matrix(0,3,3)#метод дальнего соседа
-  type13d3 <- matrix(0,3,3)#метод медиан
+  type13d3 <- matrix(0,3,3)#меетод центройдов
   type13d4 <- matrix(0,3,3)#метод Варда
   
   type14d1 <- matrix(0,4,4)#метод ближайшего соседа
   type14d2 <- matrix(0,4,4)#метод дальнего соседа
-  type14d3 <- matrix(0,4,4)#метод медиан
+  type14d3 <- matrix(0,4,4)#меетод центройдов
   type14d4 <- matrix(0,4,4)#метод Варда
   
   type15d1 <- matrix(0,5,5)#метод ближайшего соседа
   type15d2 <- matrix(0,5,5)#метод дальнего соседа
-  type15d3 <- matrix(0,5,5)#метод медиан
+  type15d3 <- matrix(0,5,5)#меетод центройдов
   type15d4 <- matrix(0,5,5)#метод Варда
   
   type12 <- list(d1 = type12d1, d2 = type12d2, d3 = type12d3, d4 = type12d4)
@@ -321,22 +339,22 @@ ksrcls <- function(data){
   
   type22d1 <- matrix(0,2,2)#метод ближайшего соседа
   type22d2 <- matrix(0,2,2)#метод дальнего соседа
-  type22d3 <- matrix(0,2,2)#метод медиан
+  type22d3 <- matrix(0,2,2)#меетод центройдов
   type22d4 <- matrix(0,2,2)#метод Варда
   
   type23d1 <- matrix(0,3,3)#метод ближайшего соседа
   type23d2 <- matrix(0,3,3)#метод дальнего соседа
-  type23d3 <- matrix(0,3,3)#метод медиан
+  type23d3 <- matrix(0,3,3)#меетод центройдов
   type23d4 <- matrix(0,3,3)#метод Варда
   
   type24d1 <- matrix(0,4,4)#метод ближайшего соседа
   type24d2 <- matrix(0,4,4)#метод дальнего соседа
-  type24d3 <- matrix(0,4,4)#метод медиан
+  type24d3 <- matrix(0,4,4)#меетод центройдов
   type24d4 <- matrix(0,4,4)#метод Варда
   
   type25d1 <- matrix(0,5,5)#метод ближайшего соседа
   type25d2 <- matrix(0,5,5)#метод дальнего соседа
-  type25d3 <- matrix(0,5,5)#метод медиан
+  type25d3 <- matrix(0,5,5)#меетод центройдов
   type25d4 <- matrix(0,5,5)#метод Варда
   
   type22 <- list(d1 = type22d1, d2 = type22d2, d3 = type22d3, d4 = type22d4)
@@ -347,22 +365,22 @@ ksrcls <- function(data){
   
   type32d1 <- matrix(0,2,2)#метод ближайшего соседа
   type32d2 <- matrix(0,2,2)#метод дальнего соседа
-  type32d3 <- matrix(0,2,2)#метод медиан
+  type32d3 <- matrix(0,2,2)#меетод центройдов
   type32d4 <- matrix(0,2,2)#метод Варда
   
   type33d1 <- matrix(0,3,3)#метод ближайшего соседа
   type33d2 <- matrix(0,3,3)#метод дальнего соседа
-  type33d3 <- matrix(0,3,3)#метод медиан
+  type33d3 <- matrix(0,3,3)#меетод центройдов
   type33d4 <- matrix(0,3,3)#метод Варда
   
   type34d1 <- matrix(0,4,4)#метод ближайшего соседа
   type34d2 <- matrix(0,4,4)#метод дальнего соседа
-  type34d3 <- matrix(0,4,4)#метод медиан
+  type34d3 <- matrix(0,4,4)#меетод центройдов
   type34d4 <- matrix(0,4,4)#метод Варда
   
   type35d1 <- matrix(0,5,5)#метод ближайшего соседа
   type35d2 <- matrix(0,5,5)#метод дальнего соседа
-  type35d3 <- matrix(0,5,5)#метод медиан
+  type35d3 <- matrix(0,5,5)#меетод центройдов
   type35d4 <- matrix(0,5,5)#метод Варда
   
   type32 <- list(d1 = type32d1, d2 = type32d2, d3 = type32d3, d4 = type32d4)
@@ -373,22 +391,22 @@ ksrcls <- function(data){
   
   type42d1 <- matrix(0,2,2)#метод ближайшего соседа
   type42d2 <- matrix(0,2,2)#метод дальнего соседа
-  type42d3 <- matrix(0,2,2)#метод медиан
+  type42d3 <- matrix(0,2,2)#меетод центройдов
   type42d4 <- matrix(0,2,2)#метод Варда
   
   type43d1 <- matrix(0,3,3)#метод ближайшего соседа
   type43d2 <- matrix(0,3,3)#метод дальнего соседа
-  type43d3 <- matrix(0,3,3)#метод медиан
+  type43d3 <- matrix(0,3,3)#меетод центройдов
   type43d4 <- matrix(0,3,3)#метод Варда
   
   type44d1 <- matrix(0,4,4)#метод ближайшего соседа
   type44d2 <- matrix(0,4,4)#метод дальнего соседа
-  type44d3 <- matrix(0,4,4)#метод медиан
+  type44d3 <- matrix(0,4,4)#меетод центройдов
   type44d4 <- matrix(0,4,4)#метод Варда
   
   type45d1 <- matrix(0,5,5)#метод ближайшего соседа
   type45d2 <- matrix(0,5,5)#метод дальнего соседа
-  type45d3 <- matrix(0,5,5)#метод медиан
+  type45d3 <- matrix(0,5,5)#меетод центройдов
   type45d4 <- matrix(0,5,5)#метод Варда
   
   type42 <- list(d1 = type42d1, d2 = type42d2, d3 = type42d3, d4 = type42d4)
