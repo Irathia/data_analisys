@@ -81,14 +81,48 @@ def build_algorithm(x_matrix, K = 3):
                 min_dist[0] = name_centroid
 
         clasters[min_dist[0]].append(key)
-    return_clasters = []
-    for key in sorted(clasters.keys()):
-        return_clasters.append(clasters[key])
-    return return_clasters
+    #return_clasters = []
+    #for key in sorted(clasters.keys()):
+    #    return_clasters.append(clasters[key])
+    return clasters
+
+def error_args(file_k, clasters, type):
+    factors_name = dict()
+    with open(file_k, 'r') as f:
+        count = 0
+        for line in f:
+            if count == 0:
+                count += 1
+                continue
+            line = line.rstrip()
+            line = line.lstrip()
+            factors = line.split(',')
+            factors[0] = 'V' + re.compile('\"').sub('', factors[0])
+            factors[-1] = re.compile('\"').sub('', factors[-1])
+            if factors[-1] not in factors_name:
+                factors_name[factors[-1]] = []
+            factors_name[factors[-1]].append(factors[0])
+    check_claster = dict()
+    for key in clasters.keys():
+        for key_factor in factors_name.keys():
+            if key in factors_name[key_factor]:
+                check_claster[key_factor] = clasters[key]
+
+    all_elements = 0
+    error_elements = 0
+    for key in check_claster.keys():
+        for element in check_claster[key]:
+            all_elements += 1
+            if element not in factors_name[key]:
+                error_elements += 1
+    return error_elements / all_elements
+
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--csv', dest='csv')
+    parser.add_argument('--check_error', dest='check_error')
+    parser.add_argument('--check_test', dest='check_test')
 
     parser.add_argument('--K', dest='k')
     args = parser.parse_args()
@@ -118,17 +152,30 @@ if __name__=='__main__':
                 for j in range(0, len(values)):
                     names_arr.append(j)
             except:
-                for value in values:
-                    names_arr.append(value)
+                if values[0] == "\"\"" or values[0] == "":
+                    for j in range(1, len(values)):
+                        values[j] = re.compile("\"").sub('', values[j])
+                        names_arr.append(values[j])
+                else:
+                    for value in values:
+                        value = re.compile("\"").sub('', value)
+                        names_arr.append(value)
                 continue
-
-        for j in range(0, len(values)):
-            if names_arr[j] not in x_matrix:
-                x_matrix[names_arr[j]] = []
-            x_matrix[names_arr[j]].append(float(values[j]))
+        start_from = 0
+        try:
+            float(values[0])
+        except:
+            start_from = 1
+        for j in range(start_from, len(values)):
+            if names_arr[j - start_from] not in x_matrix:
+                x_matrix[names_arr[j - start_from]] = []
+            x_matrix[names_arr[j - start_from]].append(float(values[j]))
 
     clasters = build_algorithm(x_matrix, args.k)
     print(clasters)
+
+    if args.check_error:
+        print(error_args(args.check_error, clasters, args.check_test))
 
     zerro_point = ['', -1]
     for key in sorted(x_matrix.keys()):
@@ -149,10 +196,10 @@ if __name__=='__main__':
                 break
             j += 1
 
-    for i in range(0, len(clasters)):
-        x = []
-        for obj_name in clasters[i]:
-            x.append(x_matrix[obj_name][zerro_point[1]])
-        pylab.scatter(x,x,color=colors_points[i])
+    #for i in range(0, len(clasters)):
+    #    x = []
+    #    for obj_name in clasters[i]:
+    #        x.append(x_matrix[obj_name][zerro_point[1]])
+    #    pylab.scatter(x,x,color=colors_points[i])
 
-    pylab.show()
+    #pylab.show()
