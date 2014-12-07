@@ -1,10 +1,6 @@
 import re
 import os
 import argparse
-from matplotlib import colors
-from matplotlib import axes
-from matplotlib import pyplot
-import pylab
 
 def build_algorithm(x_matrix, K = 3):
     distance_arr = dict()
@@ -86,7 +82,7 @@ def build_algorithm(x_matrix, K = 3):
     #    return_clasters.append(clasters[key])
     return clasters
 
-def error_args(file_k, clasters, type):
+def error_args(file_k, clasters):
     factors_name = dict()
     with open(file_k, 'r') as f:
         count = 0
@@ -102,20 +98,102 @@ def error_args(file_k, clasters, type):
             if factors[-1] not in factors_name:
                 factors_name[factors[-1]] = []
             factors_name[factors[-1]].append(factors[0])
-    check_claster = dict()
+
+    hash_num_clasters = {}
+    for key_factor in factors_name.keys():
+        hash_num_clasters[key_factor] = None
     for key in clasters.keys():
         for key_factor in factors_name.keys():
             if key in factors_name[key_factor]:
-                check_claster[key_factor] = clasters[key]
+                hash_num_clasters[key_factor] = key
+
+    list_names = []
+    for key in clasters.keys():
+        list_names.append(key)
+    for key in hash_num_clasters.keys():
+        if hash_num_clasters[key] in list_names:
+            list_names.remove(hash_num_clasters[key])
+
+    for key in hash_num_clasters.keys():
+        if hash_num_clasters[key] is None:
+            try:
+                hash_num_clasters[key] = list_names[0]
+                list_names.remove(list_names[0])
+            except:
+                pass
+
 
     all_elements = 0
     error_elements = 0
-    for key in check_claster.keys():
-        for element in check_claster[key]:
+    for key in clasters.keys():
+        for element in clasters[key]:
+            elem_claster = 0
+            for key_factor in hash_num_clasters.keys():
+                if key in hash_num_clasters[key_factor]:
+                    elem_claster = key_factor
+                    break
+
+            real_claster = 0
+            for key_factor in factors_name.keys():
+                if element in factors_name[key_factor]:
+                    real_claster = key_factor
+                    break
+
             all_elements += 1
-            if element not in factors_name[key]:
+            if real_claster != elem_claster:
                 error_elements += 1
     return error_elements / all_elements
+
+def add_cluster_names(file_k, clasters, clasters_num):
+    factors_name = dict()
+    with open(file_k, 'r') as f:
+        count = 0
+        for line in f:
+            if count == 0:
+                count += 1
+                continue
+            line = line.rstrip()
+            line = line.lstrip()
+            factors = line.split(',')
+            factors[0] = 'V' + re.compile('\"').sub('', factors[0])
+            factors[-1] = re.compile('\"').sub('', factors[-1])
+            if factors[-1] not in factors_name:
+                factors_name[factors[-1]] = []
+            factors_name[factors[-1]].append(factors[0])
+
+    hash_num_clasters = {}
+    for key_factor in factors_name.keys():
+        hash_num_clasters[key_factor] = None
+    if clasters_num > len(hash_num_clasters.keys()):
+        for i in range(0, clasters_num - len(hash_num_clasters.keys())):
+            hash_num_clasters['Unknown' + str(i)] = None
+
+    for key in clasters.keys():
+        for key_factor in factors_name.keys():
+            if key in factors_name[key_factor]:
+                hash_num_clasters[key_factor] = key
+
+    list_names = []
+    for key in clasters.keys():
+        list_names.append(key)
+    for key in hash_num_clasters.keys():
+        if hash_num_clasters[key] in list_names:
+            list_names.remove(hash_num_clasters[key])
+
+    for key in hash_num_clasters.keys():
+        if hash_num_clasters[key] is None:
+            try:
+                hash_num_clasters[key] = list_names[0]
+                list_names.remove(list_names[0])
+            except:
+                pass
+
+    names_klaster = {}
+    for key_names in hash_num_clasters.keys():
+        for key in clasters.keys():
+            if key == hash_num_clasters[key_names]:
+                names_klaster[key_names] = clasters[key]
+    return names_klaster
 
 
 if __name__=='__main__':
@@ -172,34 +250,22 @@ if __name__=='__main__':
             x_matrix[names_arr[j - start_from]].append(float(values[j]))
 
     clasters = build_algorithm(x_matrix, args.k)
-    print(clasters)
+    #print(clasters)
+
+    print('============================================')
+    for key in clasters.keys():
+        line = ''
+        for value in clasters[key]:
+            line += value + ' '
+        print(line)
+    print('============================================')
+
+
+    name_clasters = add_cluster_names(args.check_error, clasters, args.k)
+    with open(args.csv + '_' + str(args.k) + '.out.csv', 'w') as f:
+        for name in name_clasters:
+            for element in name_clasters[name]:
+                f.write('%s,%s\n' % (element, name))
 
     if args.check_error:
-        print(error_args(args.check_error, clasters, args.check_test))
-
-    zerro_point = ['', -1]
-    for key in sorted(x_matrix.keys()):
-        zerro_point[0] = key
-        for i in range(0, len(x_matrix[key])):
-            if x_matrix[key][i] == 0:
-                zerro_point[1] = i
-                break
-        break
-
-
-    colors_points = []
-    for i in range(0, args.k):
-        j = 0
-        for key in colors.cnames.keys():
-            if j == i:
-                colors_points.append(key)
-                break
-            j += 1
-
-    #for i in range(0, len(clasters)):
-    #    x = []
-    #    for obj_name in clasters[i]:
-    #        x.append(x_matrix[obj_name][zerro_point[1]])
-    #    pylab.scatter(x,x,color=colors_points[i])
-
-    #pylab.show()
+        print(error_args(args.check_error, clasters))
