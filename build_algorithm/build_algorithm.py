@@ -146,20 +146,23 @@ def error_args(file_k, clasters):
 
 def add_cluster_names(file_k, clasters, clasters_num):
     factors_name = dict()
-    with open(file_k, 'r') as f:
-        count = 0
-        for line in f:
-            if count == 0:
-                count += 1
-                continue
-            line = line.rstrip()
-            line = line.lstrip()
-            factors = line.split(',')
-            factors[0] = 'V' + re.compile('\"').sub('', factors[0])
-            factors[-1] = re.compile('\"').sub('', factors[-1])
-            if factors[-1] not in factors_name:
-                factors_name[factors[-1]] = []
-            factors_name[factors[-1]].append(factors[0])
+    try:
+        with open(file_k, 'r') as f:
+            count = 0
+            for line in f:
+                if count == 0:
+                    count += 1
+                    continue
+                line = line.rstrip()
+                line = line.lstrip()
+                factors = line.split(',')
+                factors[0] = 'V' + re.compile('\"').sub('', factors[0])
+                factors[-1] = re.compile('\"').sub('', factors[-1])
+                if factors[-1] not in factors_name:
+                    factors_name[factors[-1]] = []
+                factors_name[factors[-1]].append(factors[0])
+    except:
+        pass
 
     hash_num_clasters = {}
     for key_factor in factors_name.keys():
